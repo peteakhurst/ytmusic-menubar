@@ -1,0 +1,8 @@
+# Node / Electron
+node_modules/
+dist/
+out/
+*.log
+
+# OS cruft
+.DS_Store
