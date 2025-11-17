@@ -68,7 +68,7 @@ npm start
 npm run dist
 
 ## 🗂 Project Structure
-```bahsh
+```bash
 /
 ├── main.js            # Electron main process (tray, marquee, hidden player)
 ├── preload.js         # Scrapes YT Music DOM and sends updates via IPC
