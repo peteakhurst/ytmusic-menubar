@@ -51,11 +51,12 @@ Move it into:
 ```
 ## 🚀 Auto-Launch on Login
 The app automatically adds itself to: 
-```
+
 System Settings → General → Login Items → Open at Login
-```
+
 ## 🧩 Usage
-	- Click the menu-bar text → show/hide the player window
+
+Click the menu-bar text → show/hide the player window
 	- Tray menu:
 	- Current track info (read-only)
 	- Show/Hide Player
@@ -78,11 +79,12 @@ npm run dist
 ├── package.json
 └── dist/              # Build output (ignored in git)
 ```
+
 ## 🙌 Credits
 
 ### Built with:
-	- Electron
-	- YouTube Music Web Player
-	- macOS status bar APIs
+- Electron
+- YouTube Music Web Player
+- macOS status bar APIs
 
 Designed for a simple, elegant YT Music experience on macOS.
