@@ -32,55 +32,57 @@ YouTube Music Menubar runs a lightweight hidden web player (`music.youtube.com`)
 
 Clone the repo and install dependencies:
 
-```bash
+
+```
 npm install
+```
 
 Build the macOS .app:
-```bash
+```
 npm run dist
-
+```
 Your packaged app will appear here:
-```bash
+```
 dist/mac/YouTube Music Menubar.app
-
+```
 Move it into:
-```bash
+```
 /Applications
-
+```
 ## 🚀 Auto-Launch on Login
 The app automatically adds itself to: 
-```bash
+```
 System Settings → General → Login Items → Open at Login
-
+```
 ## 🧩 Usage
-	•	Click the menu-bar text → show/hide the player window
-	•	Tray menu:
-	•	Current track info (read-only)
-	•	Show/Hide Player
-	•	Quit App
+	- •	Click the menu-bar text → show/hide the player window
+	- •	Tray menu:
+	- •	Current track info (read-only)
+	- •	Show/Hide Player
+	- •	Quit App
 
 Playback works through the hidden YouTube Music window.
 
 ## 🛠 Development
-```bash 
-npm start
-```bash 
-npm run dist
 
+```
+npm start
+npm run dist
+```
 ## 🗂 Project Structure
-```bash
+```
 /
 ├── main.js            # Electron main process (tray, marquee, hidden player)
 ├── preload.js         # Scrapes YT Music DOM and sends updates via IPC
 ├── build/icon.icns    # App icon (macOS)
 ├── package.json
 └── dist/              # Build output (ignored in git)
-
+```
 ## 🙌 Credits
 
 ### Built with:
-	•	Electron
-	•	YouTube Music Web Player
-	•	macOS status bar APIs
+	- •	Electron
+	- •	YouTube Music Web Player
+	- •	macOS status bar APIs
 
 Designed for a simple, elegant YT Music experience on macOS.
