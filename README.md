@@ -55,11 +55,11 @@ The app automatically adds itself to:
 System Settings → General → Login Items → Open at Login
 ```
 ## 🧩 Usage
-	- •	Click the menu-bar text → show/hide the player window
-	- •	Tray menu:
-	- •	Current track info (read-only)
-	- •	Show/Hide Player
-	- •	Quit App
+	- Click the menu-bar text → show/hide the player window
+	- Tray menu:
+	- Current track info (read-only)
+	- Show/Hide Player
+	- Quit App
 
 Playback works through the hidden YouTube Music window.
 
@@ -81,8 +81,8 @@ npm run dist
 ## 🙌 Credits
 
 ### Built with:
-	- •	Electron
-	- •	YouTube Music Web Player
-	- •	macOS status bar APIs
+	- Electron
+	- YouTube Music Web Player
+	- macOS status bar APIs
 
 Designed for a simple, elegant YT Music experience on macOS.
