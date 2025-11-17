@@ -17,6 +17,18 @@ let marqueeBase = "";
 let marqueeIndex = 0;
 let marqueeTimer = null;
 
+function ensureAutoLaunch() {
+  if (process.platform !== "darwin") return; // you're on mac, but good to be safe
+
+  const settings = app.getLoginItemSettings();
+  if (!settings.openAtLogin) {
+    app.setLoginItemSettings({
+      openAtLogin: true,
+      openAsHidden: true // start hidden; tray will still be there
+    });
+  }
+}
+
 function createWindow() {
   // This window is the *real* YouTube Music player
   mainWindow = new BrowserWindow({
@@ -86,6 +98,19 @@ function toggleWindow() {
 
 // ---- Marquee logic ----
 
+function stopMarquee(text) {
+  if (marqueeTimer) {
+    clearInterval(marqueeTimer);
+    marqueeTimer = null;
+  }
+
+  // show static text (truncate to fit tray width)
+  const maxChars = 16;
+  const display = text.slice(0, maxChars);
+
+  tray.setTitle(display);
+}
+
 function startMarquee(text) {
   marqueeBase = (text || "Nothing playing").toString().trim();
   marqueeIndex = 0;
@@ -146,14 +171,13 @@ function stepMarquee() {
 // ---- IPC: song updates from preload.js ----
 
 ipcMain.on("now-playing-update", (_event, data) => {
-  const { title, artist } = data;
+  const { title, artist, isPlaying } = data;
   // on your setup, artist is actually "ARTIST – ALBUM"
 
   let artistName = "";
   let albumName = "";
 
   if (artist && artist.length) {
-    // Split "ARTIST – ALBUM" or "ARTIST - ALBUM"
     const parts = artist.split(/\s[–-]\s/);
 
     artistName = (parts[0] || "").trim();
@@ -166,7 +190,6 @@ ipcMain.on("now-playing-update", (_event, data) => {
   let composed = songTitle;
   if (artistName) composed += ` – ${artistName}`;
   if (albumName) composed += ` – ${albumName}`;
-
   if (!composed) composed = "Nothing playing";
 
   nowPlayingTitle = composed;
@@ -179,14 +202,28 @@ ipcMain.on("now-playing-update", (_event, data) => {
       tray.setContextMenu(tray._buildMenu());
     }
 
-    // update scrolling text
-    startMarquee(nowPlayingTitle);
+    if (typeof isPlaying === "boolean") {
+      if (!isPlaying) {
+        stopMarquee(nowPlayingTitle);   // static title when paused/stopped
+      } else {
+        startMarquee(nowPlayingTitle);  // scrolling title when playing
+      }
+    } else {
+      // Fallback: if we don't know, assume playing so it still scrolls
+      startMarquee(nowPlayingTitle);
+    }
   }
 });
 
 // ---- App lifecycle ----
 
 app.whenReady().then(() => {
+
+  // Hide from the Dock on macOS
+  if (process.platform === "darwin" && app.dock) {
+    app.dock.hide();
+  }
+
   createWindow(); // web YT Music player
   createTray();   // tray with scrolling text
 
